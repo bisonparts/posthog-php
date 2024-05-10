@@ -10,7 +10,8 @@ class PostHog
     public const ENV_API_KEY = "POSTHOG_API_KEY";
     public const ENV_HOST = "POSTHOG_HOST";
 
-    private static Client $client;
+    /** @var Client */
+    private static $client;
 
     /**
      * Initializes the default client to use. Uses the libcurl consumer by default.
@@ -125,7 +126,7 @@ class PostHog
         array $groupProperties = array(),
         bool $onlyEvaluateLocally = false,
         bool $sendFeatureFlagEvents = true
-    ): null | bool {
+    ) {
         self::checkClient();
         return self::$client->isFeatureEnabled(
             $key,
@@ -157,7 +158,7 @@ class PostHog
         array $groupProperties = array(),
         bool $onlyEvaluateLocally = false,
         bool $sendFeatureFlagEvents = true
-    ): null | bool | string {
+    ) {
         self::checkClient();
         return self::$client->GetFeatureFlag(
             $key,

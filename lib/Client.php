@@ -8,7 +8,7 @@ use PostHog\Consumer\ForkCurl;
 use PostHog\Consumer\LibCurl;
 use PostHog\Consumer\Socket;
 
-const SIZE_LIMIT = 50_000;
+const SIZE_LIMIT = 50000;
 
 class Client
 {
@@ -81,7 +81,7 @@ class Client
         array $options = [],
         ?HttpClient $httpClient = null,
         string $personalAPIKey = null,
-        bool $loadFeatureFlags = true,
+        bool $loadFeatureFlags = true
     ) {
         $this->apiKey = $apiKey;
         $this->personalAPIKey = $personalAPIKey;
@@ -196,7 +196,7 @@ class Client
         array $groupProperties = array(),
         bool $onlyEvaluateLocally = false,
         bool $sendFeatureFlagEvents = true
-    ): null | bool {
+    ) {
         $result = $this->getFeatureFlag(
             $key,
             $distinctId,
@@ -233,7 +233,7 @@ class Client
         array $groupProperties = array(),
         bool $onlyEvaluateLocally = false,
         bool $sendFeatureFlagEvents = true
-    ): null | bool | string {
+    ) {
         [$personProperties, $groupProperties] = $this->addLocalPersonAndGroupProperties(
             $distinctId,
             $groups,
@@ -361,7 +361,7 @@ class Client
         array $groups = array(),
         array $personProperties = array(),
         array $groupProperties = array()
-    ): bool | string {
+    ) {
         if ($featureFlag["ensure_experience_continuity"] ?? false) {
             throw new InconclusiveMatchException("Flag has experience continuity enabled");
         }

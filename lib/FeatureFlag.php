@@ -199,7 +199,7 @@ class FeatureFlag
         if (preg_match($regex, $value, $matches)) {
             $number = intval($matches["number"]);
 
-            if ($number >= 10_000) {
+            if ($number >= 10000) {
                 // Guard against overflow, disallow numbers greater than 10_000
                 return null;
             }
@@ -243,21 +243,38 @@ class FeatureFlag
         }
     }
 
+    // private static function computeExactMatch($value, $overrideValue)
+    // {
+    //     if (is_array($value)) {
+    //         return in_array(strtolower(FeatureFlag::valueToString($overrideValue)), array_map('strtolower', array_map(fn($val) => FeatureFlag::valueToString($val) , $value)));
+    //     }
+    //     return strtolower(FeatureFlag::valueToString($value)) == strtolower(FeatureFlag::valueToString($overrideValue));
+    // }
+
+    // private static function valueToString($value)
+    // {
+    //     if (is_bool($value)) {
+    //         return $value ? "true" : "false";
+    //     } else {
+    //         return strval($value);
+    //     }
+    // }
+
     private static function computeExactMatch($value, $overrideValue)
     {
         if (is_array($value)) {
-            return in_array(strtolower(FeatureFlag::valueToString($overrideValue)), array_map('strtolower', array_map(fn($val) => FeatureFlag::valueToString($val) , $value)));
+            return in_array(
+                strtolower(FeatureFlag::valueToString($overrideValue)),
+                array_map('strtolower', array_map(
+                        function ($val) {
+                            return FeatureFlag::valueToString($val);
+                        },
+                        $value
+                    )
+                )
+            );
         }
         return strtolower(FeatureFlag::valueToString($value)) == strtolower(FeatureFlag::valueToString($overrideValue));
-    }
-
-    private static function valueToString($value)
-    {
-        if (is_bool($value)) {
-            return $value ? "true" : "false";
-        } else {
-            return strval($value);
-        }
     }
 
     private static function compare($lhs, $rhs, $operator, $type = "string")
