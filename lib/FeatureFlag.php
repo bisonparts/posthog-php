@@ -251,14 +251,7 @@ class FeatureFlag
     //     return strtolower(FeatureFlag::valueToString($value)) == strtolower(FeatureFlag::valueToString($overrideValue));
     // }
 
-    // private static function valueToString($value)
-    // {
-    //     if (is_bool($value)) {
-    //         return $value ? "true" : "false";
-    //     } else {
-    //         return strval($value);
-    //     }
-    // }
+    
 
     private static function computeExactMatch($value, $overrideValue)
     {
@@ -276,6 +269,16 @@ class FeatureFlag
         }
         return strtolower(FeatureFlag::valueToString($value)) == strtolower(FeatureFlag::valueToString($overrideValue));
     }
+
+    private static function valueToString($value)
+    {
+        if (is_bool($value)) {
+            return $value ? "true" : "false";
+        } else {
+            return strval($value);
+        }
+    }
+
 
     private static function compare($lhs, $rhs, $operator, $type = "string")
     {
